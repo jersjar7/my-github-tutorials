@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burgers Equation Visualization</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .equation {
+            text-align: center;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .demo-area {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .canvas-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        canvas {
+            border: 2px solid #333;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group h3 {
+            margin: 0 0 15px 0;
+            color: #fff;
+            font-size: 1.1em;
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .slider-value {
+            float: right;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.9em;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .mode-buttons {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .mode-buttons button {
+            font-size: 0.9em;
+            padding: 8px 15px;
+        }
+        
+        .mode-buttons button.active {
+            background: linear-gradient(45deg, #FF6B6B, #ee5a5a);
+        }
+        
+        .info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .info h3 {
+            margin-top: 0;
+            color: #FFD700;
+        }
+        
+        .terms-explanation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .term {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .term h4 {
+            margin: 0 0 10px 0;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 Burgers Equation Interactive Demo</h1>
+        <div class="equation">
+            ∂u/∂t + u∂u/∂x = ν∂²u/∂x²
+        </div>
+        
+        <div class="demo-area">
+            <div class="canvas-container">
+                <canvas id="simulationCanvas" width="700" height="400"></canvas>
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <h3>🎮 Simulation Mode</h3>
+                    <div class="mode-buttons">
+                        <button id="fullBtn" class="active">Full Equation</button>
+                        <button id="advectionBtn">Advection Only</button>
+                        <button id="diffusionBtn">Diffusion Only</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3>⚙️ Parameters</h3>
+                    <div class="slider-container">
+                        <label>Viscosity (ν): <span class="slider-value" id="viscosityValue">0.01</span></label>
+                        <input type="range" id="viscosity" min="0" max="0.05" step="0.001" value="0.01">
+                    </div>
+                    <div class="slider-container">
+                        <label>Time Speed: <span class="slider-value" id="timeSpeedValue">1.0x</span></label>
+                        <input type="range" id="timeSpeed" min="0.1" max="3" step="0.1" value="1">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3>🎯 Initial Condition</h3>
+                    <div class="mode-buttons">
+                        <button id="sineBtn" class="active">Sine Wave</button>
+                        <button id="stepBtn">Step Function</button>
+                        <button id="gaussianBtn">Gaussian</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3>🎬 Controls</h3>
+                    <div class="buttons">
+                        <button id="playPauseBtn">⏸️ Pause</button>
+                        <button id="resetBtn">🔄 Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>📚 Understanding the Physics</h3>
+            <p>The Burgers equation combines two fundamental physical processes:</p>
+            
+            <div class="terms-explanation">
+                <div class="term">
+                    <h4>🏃‍♂️ Nonlinear Advection (u∂u/∂x)</h4>
+                    <p>Higher parts of the wave travel faster, causing wave steepening and shock formation. This creates the characteristic "breaking wave" behavior where smooth profiles develop sharp gradients.</p>
+                </div>
+                
+                <div class="term">
+                    <h4>🌡️ Viscous Diffusion (ν∂²u/∂x²)</h4>
+                    <p>Smooths out sharp gradients, like heat spreading through a material. Higher viscosity means more smoothing. This competes with the steepening effect of advection.</p>
+                </div>
+            </div>
+            
+            <p><strong>💡 Try This:</strong> Start with high viscosity and watch diffusion dominate. Then reduce viscosity to see advection take over and create shocks!</p>
+        </div>
+    </div>
+
+    <script>
+        class BurgersSimulation {
+            constructor() {
+                this.canvas = document.getElementById('simulationCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Simulation parameters
+                this.nx = 200;
+                this.dx = 2 * Math.PI / this.nx;
+                this.dt = 0.001;
+                this.viscosity = 0.01;
+                this.timeSpeed = 1.0;
+                
+                // Grid and solution arrays
+                this.x = new Array(this.nx);
+                this.u = new Array(this.nx);
+                this.u_new = new Array(this.nx);
+                
+                // Initialize grid
+                for (let i = 0; i < this.nx; i++) {
+                    this.x[i] = i * this.dx;
+                }
+                
+                // Simulation state
+                this.isRunning = true;
+                this.mode = 'full'; // 'full', 'advection', 'diffusion'
+                this.initialCondition = 'sine';
+                this.time = 0;
+                
+                this.initializeCondition();
+                this.setupEventListeners();
+                this.animate();
+            }
+            
+            initializeCondition() {
+                this.time = 0;
+                for (let i = 0; i < this.nx; i++) {
+                    switch (this.initialCondition) {
+                        case 'sine':
+                            this.u[i] = Math.sin(this.x[i]) * 0.5 + 0.5;
+                            break;
+                        case 'step':
+                            this.u[i] = (this.x[i] > Math.PI && this.x[i] < 4 * Math.PI / 3) ? 1.0 : 0.2;
+                            break;
+                        case 'gaussian':
+                            const center = Math.PI;
+                            const width = 0.5;
+                            this.u[i] = Math.exp(-Math.pow(this.x[i] - center, 2) / (2 * width * width)) * 0.8 + 0.2;
+                            break;
+                    }
+                }
+            }
+            
+            computeDerivatives(u) {
+                const dudx = new Array(this.nx);
+                const d2udx2 = new Array(this.nx);
+                
+                // Compute first derivative (central difference with periodic BC)
+                for (let i = 0; i < this.nx; i++) {
+                    const ip1 = (i + 1) % this.nx;
+                    const im1 = (i - 1 + this.nx) % this.nx;
+                    dudx[i] = (u[ip1] - u[im1]) / (2 * this.dx);
+                }
+                
+                // Compute second derivative (central difference with periodic BC)
+                for (let i = 0; i < this.nx; i++) {
+                    const ip1 = (i + 1) % this.nx;
+                    const im1 = (i - 1 + this.nx) % this.nx;
+                    d2udx2[i] = (u[ip1] - 2 * u[i] + u[im1]) / (this.dx * this.dx);
+                }
+                
+                return { dudx, d2udx2 };
+            }
+            
+            timeStep() {
+                const { dudx, d2udx2 } = this.computeDerivatives(this.u);
+                
+                for (let i = 0; i < this.nx; i++) {
+                    let dudt = 0;
+                    
+                    // Add terms based on mode
+                    if (this.mode === 'full' || this.mode === 'advection') {
+                        dudt -= this.u[i] * dudx[i]; // Nonlinear advection term
+                    }
+                    
+                    if (this.mode === 'full' || this.mode === 'diffusion') {
+                        dudt += this.viscosity * d2udx2[i]; // Viscous diffusion term
+                    }
+                    
+                    this.u_new[i] = this.u[i] + this.dt * this.timeSpeed * dudt;
+                }
+                
+                // Swap arrays
+                [this.u, this.u_new] = [this.u_new, this.u];
+                this.time += this.dt * this.timeSpeed;
+            }
+            
+            draw() {
+                // Clear canvas
+                this.ctx.fillStyle = '#f8f9fa';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw grid
+                this.ctx.strokeStyle = '#e9ecef';
+                this.ctx.lineWidth = 1;
+                this.ctx.setLineDash([2, 2]);
+                
+                // Vertical grid lines
+                for (let i = 0; i <= 10; i++) {
+                    const x = (i / 10) * (this.canvas.width - 80) + 40;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, 40);
+                    this.ctx.lineTo(x, this.canvas.height - 40);
+                    this.ctx.stroke();
+                }
+                
+                // Horizontal grid lines
+                for (let i = 0; i <= 5; i++) {
+                    const y = 40 + (i / 5) * (this.canvas.height - 80);
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(40, y);
+                    this.ctx.lineTo(this.canvas.width - 40, y);
+                    this.ctx.stroke();
+                }
+                
+                this.ctx.setLineDash([]);
+                
+                // Draw axes
+                this.ctx.strokeStyle = '#333';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(40, this.canvas.height - 40);
+                this.ctx.lineTo(this.canvas.width - 40, this.canvas.height - 40);
+                this.ctx.moveTo(40, 40);
+                this.ctx.lineTo(40, this.canvas.height - 40);
+                this.ctx.stroke();
+                
+                // Draw solution
+                this.ctx.strokeStyle = '#2563eb';
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                
+                const width = this.canvas.width - 80;
+                const height = this.canvas.height - 80;
+                
+                for (let i = 0; i < this.nx; i++) {
+                    const x = 40 + (i / (this.nx - 1)) * width;
+                    const y = this.canvas.height - 40 - (this.u[i] / 1.5) * height;
+                    
+                    if (i === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                }
+                
+                this.ctx.stroke();
+                
+                // Fill area under curve
+                this.ctx.fillStyle = 'rgba(37, 99, 235, 0.2)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(40, this.canvas.height - 40);
+                for (let i = 0; i < this.nx; i++) {
+                    const x = 40 + (i / (this.nx - 1)) * width;
+                    const y = this.canvas.height - 40 - (this.u[i] / 1.5) * height;
+                    this.ctx.lineTo(x, y);
+                }
+                this.ctx.lineTo(this.canvas.width - 40, this.canvas.height - 40);
+                this.ctx.closePath();
+                this.ctx.fill();
+                
+                // Labels
+                this.ctx.fillStyle = '#333';
+                this.ctx.font = '14px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('x', this.canvas.width / 2, this.canvas.height - 10);
+                
+                this.ctx.save();
+                this.ctx.translate(15, this.canvas.height / 2);
+                this.ctx.rotate(-Math.PI / 2);
+                this.ctx.fillText('u(x,t)', 0, 0);
+                this.ctx.restore();
+                
+                // Time display
+                this.ctx.textAlign = 'right';
+                this.ctx.fillText(`t = ${this.time.toFixed(2)}`, this.canvas.width - 50, 30);
+                
+                // Mode display
+                this.ctx.textAlign = 'left';
+                this.ctx.fillText(`Mode: ${this.mode.charAt(0).toUpperCase() + this.mode.slice(1)}`, 50, 30);
+            }
+            
+            animate() {
+                if (this.isRunning) {
+                    this.timeStep();
+                }
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
+            
+            setupEventListeners() {
+                // Viscosity slider
+                const viscositySlider = document.getElementById('viscosity');
+                const viscosityValue = document.getElementById('viscosityValue');
+                viscositySlider.addEventListener('input', (e) => {
+                    this.viscosity = parseFloat(e.target.value);
+                    viscosityValue.textContent = this.viscosity.toFixed(3);
+                });
+                
+                // Time speed slider
+                const timeSpeedSlider = document.getElementById('timeSpeed');
+                const timeSpeedValue = document.getElementById('timeSpeedValue');
+                timeSpeedSlider.addEventListener('input', (e) => {
+                    this.timeSpeed = parseFloat(e.target.value);
+                    timeSpeedValue.textContent = this.timeSpeed.toFixed(1) + 'x';
+                });
+                
+                // Mode buttons
+                document.getElementById('fullBtn').addEventListener('click', () => {
+                    this.setMode('full');
+                });
+                document.getElementById('advectionBtn').addEventListener('click', () => {
+                    this.setMode('advection');
+                });
+                document.getElementById('diffusionBtn').addEventListener('click', () => {
+                    this.setMode('diffusion');
+                });
+                
+                // Initial condition buttons
+                document.getElementById('sineBtn').addEventListener('click', () => {
+                    this.setInitialCondition('sine');
+                });
+                document.getElementById('stepBtn').addEventListener('click', () => {
+                    this.setInitialCondition('step');
+                });
+                document.getElementById('gaussianBtn').addEventListener('click', () => {
+                    this.setInitialCondition('gaussian');
+                });
+                
+                // Control buttons
+                document.getElementById('playPauseBtn').addEventListener('click', () => {
+                    this.togglePlayPause();
+                });
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    this.reset();
+                });
+            }
+            
+            setMode(mode) {
+                this.mode = mode;
+                document.querySelectorAll('.mode-buttons button').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(mode + 'Btn').classList.add('active');
+            }
+            
+            setInitialCondition(condition) {
+                this.initialCondition = condition;
+                this.initializeCondition();
+                document.querySelectorAll('.control-group:nth-child(3) .mode-buttons button').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(condition + 'Btn').classList.add('active');
+            }
+            
+            togglePlayPause() {
+                this.isRunning = !this.isRunning;
+                document.getElementById('playPauseBtn').textContent = this.isRunning ? '⏸️ Pause' : '▶️ Play';
+            }
+            
+            reset() {
+                this.initializeCondition();
+                this.isRunning = true;
+                document.getElementById('playPauseBtn').textContent = '⏸️ Pause';
+            }
+        }
+        
+        // Start simulation when page loads
+        window.addEventListener('load', () => {
+            new BurgersSimulation();
+        });
+    </script>
+</body>
+</html>
