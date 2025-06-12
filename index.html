@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Interactive Demos by Jerson Garcia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+        
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .intro p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-card.available {
+            cursor: pointer;
+        }
+        
+        .demo-card.coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .demo-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .demo-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+        
+        .demo-description {
+            font-size: 1em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .demo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .demo-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .demo-button.coming-soon {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Physics Interactive Demos</h1>
+            <p class="subtitle">by Jerson Garcia</p>
+        </div>
+        
+        <div class="intro">
+            <p>🔬 Welcome to my collection of interactive physics simulations and mathematical visualizations!</p>
+            <p>Each demo is designed to provide intuitive understanding of complex physical phenomena through hands-on exploration. Perfect for students, educators, and anyone curious about the beautiful mathematics that governs our universe.</p>
+        </div>
+        
+        <div class="demos-grid">
+            <div class="demo-card available" onclick="window.location.href='burgers-equation/'">
+                <div class="demo-icon">🌊</div>
+                <div class="demo-title">Burgers Equation Visualization</div>
+                <div class="demo-description">
+                    Explore nonlinear advection and viscous diffusion in this interactive demonstration of the Burgers equation. Watch how wave steepening competes with viscous smoothing in real-time.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">Fluid Dynamics</span>
+                    <span class="tag">PDE</span>
+                    <span class="tag">Nonlinear</span>
+                    <span class="tag">Interactive</span>
+                </div>
+                <a href="burgers-equation/" class="demo-button">Launch Demo</a>
+            </div>
+            
+            <div class="demo-card coming-soon">
+                <div class="demo-icon">⚡</div>
+                <div class="demo-title">Wave Propagation Simulator</div>
+                <div class="demo-description">
+                    Visualize electromagnetic waves, sound waves, and mechanical oscillations. Study wave interference, reflection, and dispersion phenomena.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">Waves</span>
+                    <span class="tag">Optics</span>
+                    <span class="tag">Acoustics</span>
+                </div>
+                <div class="demo-button coming-soon">Coming Soon</div>
+            </div>
+            
+            <div class="demo-card coming-soon">
+                <div class="demo-icon">🌪️</div>
+                <div class="demo-title">Navier-Stokes Flow Visualization</div>
+                <div class="demo-description">
+                    Interactive fluid flow simulation with obstacles, vorticity, and pressure visualization. See the full glory of incompressible Navier-Stokes equations.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">CFD</span>
+                    <span class="tag">Turbulence</span>
+                    <span class="tag">Vorticity</span>
+                </div>
+                <div class="demo-button coming-soon">Coming Soon</div>
+            </div>
+            
+            <div class="demo-card coming-soon">
+                <div class="demo-icon">🔵</div>
+                <div class="demo-title">Quantum Wave Functions</div>
+                <div class="demo-description">
+                    Explore quantum mechanics through interactive wave function visualization. Study particle in a box, harmonic oscillator, and tunneling effects.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">Quantum</span>
+                    <span class="tag">Schrödinger</span>
+                    <span class="tag">Probability</span>
+                </div>
+                <div class="demo-button coming-soon">Coming Soon</div>
+            </div>
+            
+            <div class="demo-card coming-soon">
+                <div class="demo-icon">🌍</div>
+                <div class="demo-title">Orbital Mechanics Simulator</div>
+                <div class="demo-description">
+                    Three-body problem, planetary orbits, and gravitational interactions. Launch satellites and explore chaotic trajectories in space.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">Gravity</span>
+                    <span class="tag">Chaos</span>
+                    <span class="tag">Celestial</span>
+                </div>
+                <div class="demo-button coming-soon">Coming Soon</div>
+            </div>
+            
+            <div class="demo-card coming-soon">
+                <div class="demo-icon">🔥</div>
+                <div class="demo-title">Heat Diffusion & Thermodynamics</div>
+                <div class="demo-description">
+                    Watch heat flow through different materials, explore the heat equation, and visualize temperature distributions in real-time.
+                </div>
+                <div class="demo-tags">
+                    <span class="tag">Thermodynamics</span>
+                    <span class="tag">Diffusion</span>
+                    <span class="tag">Heat Transfer</span>
+                </div>
+                <div class="demo-button coming-soon">Coming Soon</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Built with passion for physics education and interactive learning</p>
+            <p>Each simulation uses numerical methods and real-time computation to bring mathematical concepts to life</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" title="GitHub">📚</a>
+                <a href="mailto:your.email@example.com" title="Contact">📧</a>
+                <a href="https://linkedin.com/in/yourprofile" title="LinkedIn">💼</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Add floating animation to demo cards
+            const cards = document.querySelectorAll('.demo-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+        
+        // Add parallax effect to background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            document.body.style.backgroundPosition = `center ${rate}px`;
+        });
+    </script>
+</body>
+</html>
