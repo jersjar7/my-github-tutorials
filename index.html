@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Interactive Demos by Jerson Garcia</title>
+    <title>Jerson's Learning Laboratory</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
@@ -42,14 +42,21 @@
         }
         
         .header .subtitle {
-            font-size: 1.2em;
-            opacity: 0.7;
+            font-size: 1.3em;
+            opacity: 0.8;
             font-weight: 300;
+            margin-bottom: 15px;
+        }
+        
+        .header .tagline {
+            font-size: 1em;
+            opacity: 0.6;
+            font-style: italic;
         }
         
         .intro {
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto 60px auto;
             background: rgba(255, 255, 255, 0.1);
             padding: 30px;
@@ -64,14 +71,57 @@
             margin-bottom: 20px;
         }
         
-        .demos-grid {
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .subjects-container {
+            margin-bottom: 40px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
         }
         
-        .demo-card {
+        .subject-card {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             padding: 30px;
@@ -79,79 +129,158 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
         }
         
-        .demo-card:hover {
-            transform: translateY(-10px);
+        .subject-card:hover {
+            transform: translateY(-8px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             background: rgba(255, 255, 255, 0.2);
         }
         
-        .demo-card.available {
-            cursor: pointer;
-        }
-        
-        .demo-card.coming-soon {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .demo-icon {
-            font-size: 3em;
+        .subject-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 20px;
-            display: block;
         }
         
-        .demo-title {
-            font-size: 1.5em;
+        .subject-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+        
+        .subject-title {
+            font-size: 1.4em;
             font-weight: 600;
-            margin-bottom: 15px;
             color: #FFD700;
         }
         
-        .demo-description {
+        .subject-description {
             font-size: 1em;
             line-height: 1.5;
             margin-bottom: 20px;
             opacity: 0.9;
         }
         
-        .demo-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        .modules-list {
             margin-bottom: 20px;
         }
         
-        .tag {
+        .module-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .module-item:hover {
             background: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 15px;
+            transform: translateX(5px);
+        }
+        
+        .module-icon {
+            font-size: 1.2em;
+            margin-right: 12px;
+            width: 20px;
+        }
+        
+        .module-name {
+            font-weight: 500;
+            margin-right: 10px;
+        }
+        
+        .module-status {
+            margin-left: auto;
             font-size: 0.8em;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-weight: 500;
         }
         
-        .demo-button {
-            display: inline-block;
-            padding: 12px 25px;
+        .status-available {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .status-in-progress {
+            background: linear-gradient(45deg, #FF9800, #f57c00);
+            color: white;
+        }
+        
+        .status-planned {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .subject-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .progress-info {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .explore-btn {
+            padding: 10px 20px;
             background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .demo-button:hover {
+        .explore-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
-        .demo-button.coming-soon {
+        .quick-access {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+        
+        .quick-access h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            color: #FFD700;
+        }
+        
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-link {
+            padding: 12px 20px;
             background: rgba(255, 255, 255, 0.2);
-            cursor: not-allowed;
-            pointer-events: none;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
         
         .footer {
@@ -189,12 +318,21 @@
                 font-size: 2.5em;
             }
             
-            .demos-grid {
+            .subjects-grid {
                 grid-template-columns: 1fr;
             }
             
             .intro {
                 padding: 20px;
+            }
+            
+            .stats-row {
+                gap: 20px;
+            }
+            
+            .quick-links {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -202,105 +340,197 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Physics Interactive Demos</h1>
-            <p class="subtitle">by Jerson Garcia</p>
+            <h1>Jerson's Learning Laboratory</h1>
+            <p class="subtitle">Interactive Tools for Mastering Complex Concepts</p>
+            <p class="tagline">Where curiosity meets visualization</p>
         </div>
         
         <div class="intro">
-            <p>🔬 Welcome to my collection of interactive physics simulations and mathematical visualizations!</p>
-            <p>Each demo is designed to provide intuitive understanding of complex physical phenomena through hands-on exploration. Perfect for students, educators, and anyone curious about the beautiful mathematics that governs our universe.</p>
+            <p>🔬 Welcome to my personal learning laboratory! This is where I build interactive tools and visualizations to deeply understand complex concepts across mathematics, physics, computer science, and beyond.</p>
+            <p>Each tool is designed to provide hands-on exploration and intuitive understanding through dynamic visualizations and real-time experimentation.</p>
+            
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Subject Areas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Interactive Modules</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Learning Opportunities</div>
+                </div>
+            </div>
         </div>
         
-        <div class="demos-grid">
-            <div class="demo-card available" onclick="window.location.href='burgers-equation/'">
-                <div class="demo-icon">🌊</div>
-                <div class="demo-title">Burgers Equation Visualization</div>
-                <div class="demo-description">
-                    Explore nonlinear advection and viscous diffusion in this interactive demonstration of the Burgers equation. Watch how wave steepening competes with viscous smoothing in real-time.
-                </div>
-                <div class="demo-tags">
-                    <span class="tag">Fluid Dynamics</span>
-                    <span class="tag">PDE</span>
-                    <span class="tag">Nonlinear</span>
-                    <span class="tag">Interactive</span>
-                </div>
-                <a href="burgers-equation/" class="demo-button">Launch Demo</a>
+        <div class="quick-access">
+            <h3>🚀 Quick Access</h3>
+            <div class="quick-links">
+                <a href="#ml-prep" class="quick-link">📚 Currently Studying: ML Prep</a>
+                <a href="#mathematics" class="quick-link">📊 Mathematics Tools</a>
+                <a href="#physics" class="quick-link">⚡ Physics Simulations</a>
+                <a href="burgers-equation/" class="quick-link">🌊 Latest: Burgers Equation</a>
+            </div>
+        </div>
+        
+        <div class="subjects-container">
+            <div class="section-header">
+                <h2 class="section-title">Learning Subjects</h2>
+                <p class="section-subtitle">Interactive tools organized by academic discipline</p>
             </div>
             
-            <div class="demo-card coming-soon">
-                <div class="demo-icon">⚡</div>
-                <div class="demo-title">Wave Propagation Simulator</div>
-                <div class="demo-description">
-                    Visualize electromagnetic waves, sound waves, and mechanical oscillations. Study wave interference, reflection, and dispersion phenomena.
+            <div class="subjects-grid">
+                <div class="subject-card" id="ml-prep">
+                    <div class="subject-header">
+                        <div class="subject-icon">🤖</div>
+                        <div class="subject-title">Machine Learning Preparation</div>
+                    </div>
+                    <div class="subject-description">
+                        Building the mathematical foundation for CS 270: Intro to Machine Learning. Interactive tools for linear algebra, calculus, and probability concepts essential for ML success.
+                    </div>
+                    <div class="modules-list">
+                        <div class="module-item">
+                            <span class="module-icon">🔢</span>
+                            <span class="module-name">Linear Algebra Fundamentals</span>
+                            <span class="module-status status-in-progress">In Progress</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">📐</span>
+                            <span class="module-name">Calculus for Optimization</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🎲</span>
+                            <span class="module-name">Probability & Statistics</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🧠</span>
+                            <span class="module-name">ML Concepts Preview</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                    </div>
+                    <div class="subject-footer">
+                        <span class="progress-info">Starting September 2025</span>
+                        <a href="#" class="explore-btn">Explore Modules</a>
+                    </div>
                 </div>
-                <div class="demo-tags">
-                    <span class="tag">Waves</span>
-                    <span class="tag">Optics</span>
-                    <span class="tag">Acoustics</span>
+                
+                <div class="subject-card" id="mathematics">
+                    <div class="subject-header">
+                        <div class="subject-icon">📊</div>
+                        <div class="subject-title">Mathematics & Analysis</div>
+                    </div>
+                    <div class="subject-description">
+                        Pure and applied mathematics tools covering differential equations, linear algebra, calculus, and numerical methods through interactive visualizations.
+                    </div>
+                    <div class="modules-list">
+                        <div class="module-item">
+                            <span class="module-icon">🌊</span>
+                            <span class="module-name">Burgers Equation Demo</span>
+                            <span class="module-status status-available">Available</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">📈</span>
+                            <span class="module-name">Function Visualization</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🔄</span>
+                            <span class="module-name">Linear Transformations</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">∫</span>
+                            <span class="module-name">Calculus Concepts</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                    </div>
+                    <div class="subject-footer">
+                        <span class="progress-info">1 tool available</span>
+                        <a href="burgers-equation/" class="explore-btn">Explore Tools</a>
+                    </div>
                 </div>
-                <div class="demo-button coming-soon">Coming Soon</div>
-            </div>
-            
-            <div class="demo-card coming-soon">
-                <div class="demo-icon">🌪️</div>
-                <div class="demo-title">Navier-Stokes Flow Visualization</div>
-                <div class="demo-description">
-                    Interactive fluid flow simulation with obstacles, vorticity, and pressure visualization. See the full glory of incompressible Navier-Stokes equations.
+                
+                <div class="subject-card" id="physics">
+                    <div class="subject-header">
+                        <div class="subject-icon">⚡</div>
+                        <div class="subject-title">Physics & Engineering</div>
+                    </div>
+                    <div class="subject-description">
+                        Interactive physics simulations covering fluid dynamics, electromagnetics, quantum mechanics, and thermodynamics with real-time parameter control.
+                    </div>
+                    <div class="modules-list">
+                        <div class="module-item">
+                            <span class="module-icon">🌪️</span>
+                            <span class="module-name">Navier-Stokes Simulation</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🔵</span>
+                            <span class="module-name">Wave Propagation</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🌡️</span>
+                            <span class="module-name">Heat Transfer</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">⚛️</span>
+                            <span class="module-name">Quantum Mechanics</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                    </div>
+                    <div class="subject-footer">
+                        <span class="progress-info">Building on Burgers equation</span>
+                        <a href="#" class="explore-btn">Coming Soon</a>
+                    </div>
                 </div>
-                <div class="demo-tags">
-                    <span class="tag">CFD</span>
-                    <span class="tag">Turbulence</span>
-                    <span class="tag">Vorticity</span>
+                
+                <div class="subject-card" id="computer-science">
+                    <div class="subject-header">
+                        <div class="subject-icon">💻</div>
+                        <div class="subject-title">Computer Science</div>
+                    </div>
+                    <div class="subject-description">
+                        Algorithm visualizations, data structure animations, and computational method demonstrations to understand CS concepts through interactive exploration.
+                    </div>
+                    <div class="modules-list">
+                        <div class="module-item">
+                            <span class="module-icon">🔍</span>
+                            <span class="module-name">Sorting Algorithms</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🌳</span>
+                            <span class="module-name">Data Structures</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">🗺️</span>
+                            <span class="module-name">Graph Algorithms</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-icon">⚡</span>
+                            <span class="module-name">Complexity Analysis</span>
+                            <span class="module-status status-planned">Planned</span>
+                        </div>
+                    </div>
+                    <div class="subject-footer">
+                        <span class="progress-info">Future expansion</span>
+                        <a href="#" class="explore-btn">Coming Soon</a>
+                    </div>
                 </div>
-                <div class="demo-button coming-soon">Coming Soon</div>
-            </div>
-            
-            <div class="demo-card coming-soon">
-                <div class="demo-icon">🔵</div>
-                <div class="demo-title">Quantum Wave Functions</div>
-                <div class="demo-description">
-                    Explore quantum mechanics through interactive wave function visualization. Study particle in a box, harmonic oscillator, and tunneling effects.
-                </div>
-                <div class="demo-tags">
-                    <span class="tag">Quantum</span>
-                    <span class="tag">Schrödinger</span>
-                    <span class="tag">Probability</span>
-                </div>
-                <div class="demo-button coming-soon">Coming Soon</div>
-            </div>
-            
-            <div class="demo-card coming-soon">
-                <div class="demo-icon">🌍</div>
-                <div class="demo-title">Orbital Mechanics Simulator</div>
-                <div class="demo-description">
-                    Three-body problem, planetary orbits, and gravitational interactions. Launch satellites and explore chaotic trajectories in space.
-                </div>
-                <div class="demo-tags">
-                    <span class="tag">Gravity</span>
-                    <span class="tag">Chaos</span>
-                    <span class="tag">Celestial</span>
-                </div>
-                <div class="demo-button coming-soon">Coming Soon</div>
-            </div>
-            
-            <div class="demo-card coming-soon">
-                <div class="demo-icon">🔥</div>
-                <div class="demo-title">Heat Diffusion & Thermodynamics</div>
-                <div class="demo-description">
-                    Watch heat flow through different materials, explore the heat equation, and visualize temperature distributions in real-time.
-                </div>
-                <div class="demo-tags">
-                    <span class="tag">Thermodynamics</span>
-                    <span class="tag">Diffusion</span>
-                    <span class="tag">Heat Transfer</span>
-                </div>
-                <div class="demo-button coming-soon">Coming Soon</div>
             </div>
         </div>
         
         <div class="footer">
-            <p>Built with passion for physics education and interactive learning</p>
-            <p>Each simulation uses numerical methods and real-time computation to bring mathematical concepts to life</p>
+            <p>🧪 Built with curiosity and dedication to deep understanding</p>
+            <p>Every tool represents a journey of discovery and the joy of learning through interaction</p>
             <div class="social-links">
                 <a href="https://github.com/yourusername" title="GitHub">📚</a>
                 <a href="mailto:your.email@example.com" title="Contact">📧</a>
@@ -310,31 +540,102 @@
     </div>
     
     <script>
-        // Add some interactive effects
+        // Enhanced interactivity
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for internal links
+            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Subject card interactions
+            const subjectCards = document.querySelectorAll('.subject-card');
+            subjectCards.forEach((card, index) => {
+                // Add entrance animation delay
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                // Module item hover effects
+                const moduleItems = card.querySelectorAll('.module-item');
+                moduleItems.forEach(item => {
+                    item.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateX(8px)';
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateX(0)';
                     });
                 });
             });
             
-            // Add floating animation to demo cards
-            const cards = document.querySelectorAll('.demo-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
+            // Dynamic stats counter (for fun)
+            function animateStats() {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    if (stat.textContent !== '∞') {
+                        const finalValue = parseInt(stat.textContent);
+                        let currentValue = 0;
+                        const increment = finalValue / 20;
+                        
+                        const timer = setInterval(() => {
+                            currentValue += increment;
+                            if (currentValue >= finalValue) {
+                                stat.textContent = finalValue + (finalValue > 10 ? '+' : '');
+                                clearInterval(timer);
+                            } else {
+                                stat.textContent = Math.floor(currentValue);
+                            }
+                        }, 50);
+                    }
+                });
+            }
+            
+            // Trigger stats animation when intro section is visible
+            const intro = document.querySelector('.intro');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            observer.observe(intro);
+            
+            // Add floating animation to cards
+            subjectCards.forEach((card, index) => {
+                const floatDelay = index * 0.5;
+                setInterval(() => {
+                    card.style.transform = `translateY(${Math.sin(Date.now() * 0.001 + floatDelay) * 3}px)`;
+                }, 50);
             });
         });
         
-        // Add parallax effect to background
+        // Background parallax effect
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
+            const rate = scrolled * -0.3;
             document.body.style.backgroundPosition = `center ${rate}px`;
         });
+        
+        // Progress tracking simulation (for future implementation)
+        function updateProgress(subject, moduleId, status) {
+            // This would connect to localStorage or a backend to track progress
+            console.log(`Progress updated: ${subject}.${moduleId} = ${status}`);
+        }
+        
+        // Subject navigation
+        function navigateToSubject(subjectId) {
+            // Future: Load subject-specific page or expand section
+            console.log(`Navigating to: ${subjectId}`);
+        }
     </script>
 </body>
 </html>
