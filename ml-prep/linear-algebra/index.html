@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Preparation Course</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <div class="breadcrumb">
+                <a href="../">🏠 Home</a> › 🤖 Machine Learning Preparation
+            </div>
+        </div>
+        
+        <div class="header">
+            <h1>🤖 Machine Learning Preparation</h1>
+            <p class="subtitle">Mathematical Foundation for CS 270: Intro to Machine Learning</p>
+            <p class="description">
+                Build a solid conceptual and practical foundation in essential Linear Algebra, Calculus, and Probability & Statistics to maximize your learning in Machine Learning. Each lesson combines theory with interactive visualizations for deep understanding.
+            </p>
+        </div>
+        
+        <div class="course-overview">
+            <h2>📋 Course Overview</h2>
+            <p>This course prepares you for advanced machine learning concepts by building strong mathematical foundations. You'll master the key concepts through interactive lessons that make abstract mathematics concrete and intuitive.</p>
+            
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>📊 Interactive Learning</h3>
+                    <p>Visualize concepts through dynamic, hands-on demonstrations</p>
+                </div>
+                <div class="overview-card">
+                    <h3>🎯 ML-Focused</h3>
+                    <p>Every concept directly connects to machine learning applications</p>
+                </div>
+                <div class="overview-card">
+                    <h3>⏰ Self-Paced</h3>
+                    <p>Learn at your own speed with comprehensive explanations</p>
+                </div>
+                <div class="overview-card">
+                    <h3>🔧 Practical</h3>
+                    <p>Build intuition through exploration, not just memorization</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-section">
+            <h2>📈 Overall Progress</h2>
+            <p id="progress-text">Linear Algebra: 7 of 7 lessons available</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p id="progress-percentage">100% Complete - Amazing work! 🚀</p>
+        </div>
+        
+        <div class="modules-section">
+            <div class="module-category">
+                <h2><span class="category-icon">📊</span>Linear Algebra Fundamentals</h2>
+                <p class="category-description">
+                    Master vectors, matrices, and their operations - the language of machine learning. These concepts form the foundation for understanding data representations, transformations, and algorithms like PCA and neural networks.
+                </p>
+                
+                <div class="lessons-grid">
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/vectors/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🔢</div>
+                            <div class="lesson-title">Vector Fundamentals</div>
+                        </div>
+                        <div class="lesson-description">
+                            Discover vectors as the building blocks of ML. Learn vector operations, magnitude, and normalization through interactive 2D and 3D visualizations.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~30 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Vector Operations</span>
+                                <span class="concept-tag">Magnitude</span>
+                                <span class="concept-tag">Normalization</span>
+                                <span class="concept-tag">3D Visualization</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/vectors/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/dot-products/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">📐</div>
+                            <div class="lesson-title">Dot Products & Orthogonality</div>
+                        </div>
+                        <div class="lesson-description">
+                            Explore how vectors interact through dot products. Understand angles, projections, and orthogonality - crucial for similarity measures in ML.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~25 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Dot Product</span>
+                                <span class="concept-tag">Orthogonality</span>
+                                <span class="concept-tag">Projections</span>
+                                <span class="concept-tag">Similarity</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/dot-products/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/matrix-operations/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🔢</div>
+                            <div class="lesson-title">Matrix Operations</div>
+                        </div>
+                        <div class="lesson-description">
+                            Master matrix addition, scalar multiplication, and transpose. Learn the fundamental operations that power data transformations in ML.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~30 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Matrix Addition</span>
+                                <span class="concept-tag">Scalar Multiplication</span>
+                                <span class="concept-tag">Transpose</span>
+                                <span class="concept-tag">Identity Matrix</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/matrix-operations/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/matrix-multiplication/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">⚡</div>
+                            <div class="lesson-title">Matrix Multiplication</div>
+                        </div>
+                        <div class="lesson-description">
+                            Master matrix multiplication, the powerhouse operation of ML. Understand dimension rules and see how it drives neural networks.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~35 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Matrix Multiplication</span>
+                                <span class="concept-tag">Dimension Rules</span>
+                                <span class="concept-tag">Neural Networks</span>
+                                <span class="concept-tag">Data Processing</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/matrix-multiplication/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/vector-spaces/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🌐</div>
+                            <div class="lesson-title">Vector Spaces & Independence</div>
+                        </div>
+                        <div class="lesson-description">
+                            Discover the hidden structure of data through vector spaces, linear independence, and dimensionality concepts.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~40 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Linear Independence</span>
+                                <span class="concept-tag">Basis</span>
+                                <span class="concept-tag">Dimensionality</span>
+                                <span class="concept-tag">Feature Selection</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/vector-spaces/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/determinants-inverses/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🔍</div>
+                            <div class="lesson-title">Determinants & Inverses</div>
+                        </div>
+                        <div class="lesson-description">
+                            Understand when matrices can be "undone" and what determinants reveal about transformations and system solvability.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~30 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Determinants</span>
+                                <span class="concept-tag">Matrix Inverse</span>
+                                <span class="concept-tag">Linear Systems</span>
+                                <span class="concept-tag">Geometric Meaning</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/determinants-inverses/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card available" onclick="window.location.href='linear-algebra/eigenvalues/'">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🎯</div>
+                            <div class="lesson-title">Eigenvalues & Eigenvectors</div>
+                        </div>
+                        <div class="lesson-description">
+                            Unlock the crown jewel of linear algebra! Master the concepts that power PCA, dimensionality reduction, and data compression.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~45 minutes</div>
+                            <div class="lesson-status status-available">Available</div>
+                        </div>
+                        <div class="lesson-concepts">
+                            <h4>Key Concepts:</h4>
+                            <div class="concepts-list">
+                                <span class="concept-tag">Eigenvalues</span>
+                                <span class="concept-tag">Eigenvectors</span>
+                                <span class="concept-tag">PCA</span>
+                                <span class="concept-tag">Data Compression</span>
+                            </div>
+                        </div>
+                        <div class="lesson-action">
+                            <a href="linear-algebra/eigenvalues/" class="lesson-btn">Start Lesson</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-category">
+                <h2><span class="category-icon">📐</span>Calculus for Optimization</h2>
+                <p class="category-description">
+                    Grasp derivatives, gradients, and optimization - the mathematical engine behind machine learning algorithms. Learn how models "learn" through calculus-based optimization.
+                </p>
+                
+                <div class="lessons-grid">
+                    <div class="lesson-card coming-soon">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">📈</div>
+                            <div class="lesson-title">Derivatives & Gradients</div>
+                        </div>
+                        <div class="lesson-description">
+                            Master the foundation of optimization. Understand how derivatives guide machine learning algorithms toward better solutions.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~35 minutes</div>
+                            <div class="lesson-status status-coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="lesson-action">
+                            <span class="lesson-btn disabled">Coming Soon</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-card coming-soon">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🎯</div>
+                            <div class="lesson-title">Optimization Methods</div>
+                        </div>
+                        <div class="lesson-description">
+                            Explore gradient descent and other optimization techniques that train machine learning models.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~40 minutes</div>
+                            <div class="lesson-status status-coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="lesson-action">
+                            <span class="lesson-btn disabled">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-category">
+                <h2><span class="category-icon">🎲</span>Probability & Statistics</h2>
+                <p class="category-description">
+                    Build statistical intuition for understanding data, uncertainty, and model performance. Essential for interpreting ML results and building robust models.
+                </p>
+                
+                <div class="lessons-grid">
+                    <div class="lesson-card coming-soon">
+                        <div class="lesson-header">
+                            <div class="lesson-icon">🎯</div>
+                            <div class="lesson-title">Probability Fundamentals</div>
+                        </div>
+                        <div class="lesson-description">
+                            Master probability distributions, Bayes' theorem, and statistical inference - the foundation of probabilistic machine learning.
+                        </div>
+                        <div class="lesson-meta">
+                            <div class="lesson-duration">⏱️ ~45 minutes</div>
+                            <div class="lesson-status status-coming-soon">Coming Soon</div>
+                        </div>
+                        <div class="lesson-action">
+                            <span class="lesson-btn disabled">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
