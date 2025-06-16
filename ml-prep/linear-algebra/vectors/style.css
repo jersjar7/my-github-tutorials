@@ -21,6 +21,24 @@ body {
     margin: 0 auto;
 }
 
+.navigation {
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    font-size: 1em;
+    opacity: 0.8;
+}
+
+.breadcrumb a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
 .content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
