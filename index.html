@@ -245,6 +245,12 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         
+        .explore-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .quick-access {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
@@ -368,10 +374,10 @@
         <div class="quick-access">
             <h3>🚀 Quick Access</h3>
             <div class="quick-links">
-                <a href="#ml-prep" class="quick-link">📚 Currently Studying: ML Prep</a>
+                <a href="ml-prep/" class="quick-link">📚 ML Preparation Course</a>
+                <a href="ml-prep/linear-algebra/vectors/" class="quick-link">🔢 Start with Vectors</a>
+                <a href="burgers-equation/" class="quick-link">🌊 Physics: Burgers Equation</a>
                 <a href="#mathematics" class="quick-link">📊 Mathematics Tools</a>
-                <a href="#physics" class="quick-link">⚡ Physics Simulations</a>
-                <a href="burgers-equation/" class="quick-link">🌊 Latest: Burgers Equation</a>
             </div>
         </div>
         
@@ -394,7 +400,7 @@
                         <div class="module-item">
                             <span class="module-icon">🔢</span>
                             <span class="module-name">Linear Algebra Fundamentals</span>
-                            <span class="module-status status-in-progress">In Progress</span>
+                            <span class="module-status status-available">Available</span>
                         </div>
                         <div class="module-item">
                             <span class="module-icon">📐</span>
@@ -413,8 +419,8 @@
                         </div>
                     </div>
                     <div class="subject-footer">
-                        <span class="progress-info">Starting September 2025</span>
-                        <a href="#" class="explore-btn">Explore Modules</a>
+                        <span class="progress-info">Linear Algebra Ready!</span>
+                        <a href="ml-prep/" class="explore-btn">Start Course</a>
                     </div>
                 </div>
                 
@@ -486,7 +492,7 @@
                     </div>
                     <div class="subject-footer">
                         <span class="progress-info">Building on Burgers equation</span>
-                        <a href="#" class="explore-btn">Coming Soon</a>
+                        <a href="#" class="explore-btn" style="background: #666; cursor: not-allowed;">Coming Soon</a>
                     </div>
                 </div>
                 
@@ -522,7 +528,7 @@
                     </div>
                     <div class="subject-footer">
                         <span class="progress-info">Future expansion</span>
-                        <a href="#" class="explore-btn">Coming Soon</a>
+                        <a href="#" class="explore-btn" style="background: #666; cursor: not-allowed;">Coming Soon</a>
                     </div>
                 </div>
             </div>
@@ -538,104 +544,5 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        // Enhanced interactivity
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-            
-            // Subject card interactions
-            const subjectCards = document.querySelectorAll('.subject-card');
-            subjectCards.forEach((card, index) => {
-                // Add entrance animation delay
-                card.style.animationDelay = `${index * 0.1}s`;
-                
-                // Module item hover effects
-                const moduleItems = card.querySelectorAll('.module-item');
-                moduleItems.forEach(item => {
-                    item.addEventListener('mouseenter', function() {
-                        this.style.transform = 'translateX(8px)';
-                    });
-                    
-                    item.addEventListener('mouseleave', function() {
-                        this.style.transform = 'translateX(0)';
-                    });
-                });
-            });
-            
-            // Dynamic stats counter (for fun)
-            function animateStats() {
-                const statNumbers = document.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    if (stat.textContent !== '∞') {
-                        const finalValue = parseInt(stat.textContent);
-                        let currentValue = 0;
-                        const increment = finalValue / 20;
-                        
-                        const timer = setInterval(() => {
-                            currentValue += increment;
-                            if (currentValue >= finalValue) {
-                                stat.textContent = finalValue + (finalValue > 10 ? '+' : '');
-                                clearInterval(timer);
-                            } else {
-                                stat.textContent = Math.floor(currentValue);
-                            }
-                        }, 50);
-                    }
-                });
-            }
-            
-            // Trigger stats animation when intro section is visible
-            const intro = document.querySelector('.intro');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        animateStats();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-            observer.observe(intro);
-            
-            // Add floating animation to cards
-            subjectCards.forEach((card, index) => {
-                const floatDelay = index * 0.5;
-                setInterval(() => {
-                    card.style.transform = `translateY(${Math.sin(Date.now() * 0.001 + floatDelay) * 3}px)`;
-                }, 50);
-            });
-        });
-        
-        // Background parallax effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3;
-            document.body.style.backgroundPosition = `center ${rate}px`;
-        });
-        
-        // Progress tracking simulation (for future implementation)
-        function updateProgress(subject, moduleId, status) {
-            // This would connect to localStorage or a backend to track progress
-            console.log(`Progress updated: ${subject}.${moduleId} = ${status}`);
-        }
-        
-        // Subject navigation
-        function navigateToSubject(subjectId) {
-            // Future: Load subject-specific page or expand section
-            console.log(`Navigating to: ${subjectId}`);
-        }
-    </script>
 </body>
 </html>
